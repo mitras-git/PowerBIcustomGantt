@@ -8,8 +8,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "pbiviz": "pbiviz",
-    "start": "pbiviz start",
+    "start": "powershell -ExecutionPolicy Bypass -File ./start.ps1",
     "package": "pbiviz package",
     "lint": "npx eslint ."
   },
