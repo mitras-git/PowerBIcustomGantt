@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import { Gantt, type Task } from "gantt-task-react";
+import "gantt-task-react/dist/index.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: React.FC = () => {
+  const currentDate: Date = new Date();
+  const initialTasks: Task[] = [
+    {
+      name: "Project Test",
+      id: "TestProject",
+      start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
+      end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
+      progress: 85,
+      type: "project",
+      hideChildren: false,
+    },
+    {
+      id: "1",
+      name: "Task 1",
+      start: new Date(2025, 5, 3),
+      end: new Date(2025, 5, 8),
+      progress: 50,
+      type: "task",
+      project: "TestProject",
+    },
+    {
+      id: "2",
+      name: "Task 2",
+      start: new Date(2025, 5, 10),
+      end: new Date(2025, 5, 15),
+      progress: 75,
+      type: "task",
+      project: "TestProject",
+    },
+  ];
+
+  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+
+  const handleExpanderClick = (task: Task) => {
+    const updatedTasks = tasks.map(t =>
+      t.id === task.id ? { ...t, hideChildren: !t.hideChildren } : t
+    );
+    setTasks(updatedTasks);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div style={{ padding: "20px" }}>
+      <h1>Gantt Chart</h1>
+      <Gantt 
+      tasks={tasks} 
+      onExpanderClick={handleExpanderClick} 
+      />
+    </div>
+  );
+};
 
-export default App
+export default App;
