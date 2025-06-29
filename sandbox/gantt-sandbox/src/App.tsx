@@ -46,10 +46,11 @@ const App: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: "20px", maxWidth: "100vw", overflowX: "auto" }}>
+    <div style={{ padding: "20px", maxWidth: "75vw", overflowX: "auto" }}>
       <h1>Gantt Chart</h1>
       <Gantt tasks={tasks}
         onExpanderClick={handleExpanderClick}
+        locale={"en-GB"}
         TaskListHeader={TaskListHeaderDefault}
         TaskListTable={TaskListTableDefault}
         />
