@@ -4,6 +4,7 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "target": "es2022",
+        "jsx": "react-jsx",
         "sourceMap": true,
         "outDir": "./.tmp/build/",
         "moduleResolution": "node",
@@ -13,7 +14,7 @@
             "dom"
         ]
     },
-    "files": [
-        "./src/visual.ts"
+    "include": [
+        "src/**/*"
     ]
 }
