@@ -28,10 +28,6 @@
 import powerbi from "powerbi-visuals-api";
 import { FormattingSettingsService } from "powerbi-visuals-utils-formattingmodel";
 import "./../style/visual.less";
-import * as React from "react";
-import { createRoot, Root } from "react-dom/client";
-import App from "./react/App";
-import "./react/index.css";
 
 import VisualConstructorOptions = powerbi.extensibility.visual.VisualConstructorOptions;
 import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;
@@ -41,38 +37,33 @@ import { VisualFormattingSettingsModel } from "./settings";
 
 export class Visual implements IVisual {
     private target: HTMLElement;
-    private reactRoot: Root | undefined;
-    private formattingSettings: VisualFormattingSettingsModel | undefined;
+    private updateCount: number;
+    private textNode: Text;
+    private formattingSettings: VisualFormattingSettingsModel;
     private formattingSettingsService: FormattingSettingsService;
 
     constructor(options: VisualConstructorOptions) {
-        console.log("Visual constructor", options);
+        console.log('Visual constructor', options);
         this.formattingSettingsService = new FormattingSettingsService();
         this.target = options.element;
-
+        this.updateCount = 0;
         if (document) {
-            this.reactRoot = createRoot(this.target);
-            this.reactRoot.render(
-                <React.StrictMode>
-                    <App />
-                </React.StrictMode>
-            );
+            const new_p: HTMLElement = document.createElement("p");
+            new_p.appendChild(document.createTextNode("Update count:"));
+            const new_em: HTMLElement = document.createElement("em");
+            this.textNode = document.createTextNode(this.updateCount.toString());
+            new_em.appendChild(this.textNode);
+            new_p.appendChild(new_em);
+            this.target.appendChild(new_p);
         }
     }
 
     public update(options: VisualUpdateOptions) {
-        this.formattingSettings = this.formattingSettingsService.populateFormattingSettingsModel(
-            VisualFormattingSettingsModel,
-            options.dataViews[0]
-        );
+        this.formattingSettings = this.formattingSettingsService.populateFormattingSettingsModel(VisualFormattingSettingsModel, options.dataViews[0]);
 
-        console.log("Visual update", options);
-        // In this prototype there is no dynamic data handling yet
-    }
-
-    public destroy(): void {
-        if (this.reactRoot) {
-            this.reactRoot.unmount();
+        console.log('Visual update', options);
+        if (this.textNode) {
+            this.textNode.textContent = (this.updateCount++).toString();
         }
     }
 
