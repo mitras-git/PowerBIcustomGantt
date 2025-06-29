@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Gantt, type Task } from "gantt-task-react";
 import "gantt-task-react/dist/index.css";
+import { TaskListHeaderDefault } from "./custom-components/task-list-header-custom";
+import { TaskListTableDefault } from "./custom-components/task-list-table-custom";
 
 const App: React.FC = () => {
   const currentDate: Date = new Date();
@@ -9,7 +11,7 @@ const App: React.FC = () => {
       name: "Project Test",
       id: "TestProject",
       start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
-      end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
+      end: new Date(currentDate.getFullYear(), 10, 15),
       progress: 85,
       type: "project",
       hideChildren: false,
@@ -44,12 +46,13 @@ const App: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: "20px", maxWidth: "100vw", overflowX: "auto" }}>
       <h1>Gantt Chart</h1>
-      <Gantt 
-      tasks={tasks} 
-      onExpanderClick={handleExpanderClick} 
-      />
+      <Gantt tasks={tasks}
+        onExpanderClick={handleExpanderClick}
+        TaskListHeader={TaskListHeaderDefault}
+        TaskListTable={TaskListTableDefault}
+        />
     </div>
   );
 };
