@@ -53,8 +53,8 @@ export class ReactCircleCard extends React.Component<{}>{
         return (
             <div>
                 <div className="circleCard">
-                    {currentDate.getFullYear()}
                     Hello, React!
+                    {currentDate.getFullYear()}
                 </div>
                 <div style={{ padding: "5px", maxWidth: "100vw", overflowX: "auto" }}>
                     <h1>Gantt Chart</h1>
