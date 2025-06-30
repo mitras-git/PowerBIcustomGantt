@@ -1,4 +1,0 @@
-import powerbiVisualsApi from "powerbi-visuals-api";
-import IVisualPlugin = powerbiVisualsApi.visuals.plugins.IVisualPlugin;
-declare var powerBIcustomGantt7E945E7A04FA4B4CAC872539F0435A13_DEBUG: IVisualPlugin;
-export default powerBIcustomGantt7E945E7A04FA4B4CAC872539F0435A13_DEBUG;
