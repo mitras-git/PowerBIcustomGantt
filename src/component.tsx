@@ -53,15 +53,16 @@ export class ReactCircleCard extends React.Component<{}>{
         return (
             <div>
                 <div className="circleCard">
-                    Hello, React!
+                    Hello, React!<br></br>
+                    Hello from Mac!
                     {currentDate.getFullYear()}
                 </div>
                 <div style={{ padding: "5px", maxWidth: "100vw", overflowX: "auto" }}>
                     <h1>Gantt Chart</h1>
                     <Gantt tasks={tasks} 
                     // onExpanderClick={handleExpanderClick}
-                    // TaskListHeader={TaskListHeaderDefault}
-                    // TaskListTable={TaskListTableDefault}
+                    TaskListHeader={TaskListHeaderDefault}
+                    TaskListTable={TaskListTableDefault}
                     locale={"en-GB"} />
                 </div>
             </div>
