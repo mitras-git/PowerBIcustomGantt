@@ -35,7 +35,7 @@ import IVisual = powerbi.extensibility.visual.IVisual;
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { createRoot } from "react-dom/client";
-import ReactCircleCard from "./component";
+import CustomGanttChart from "./component";
 
 import "./../style/visual.less";
 
@@ -46,7 +46,7 @@ export class Visual implements IVisual {
     constructor(options: VisualConstructorOptions) {
         this.target = options.element;
         const root = createRoot(this.target);
-        root.render(React.createElement(ReactCircleCard, {}));
+        root.render(React.createElement(CustomGanttChart, {}));
     }
 
     public update(options: VisualUpdateOptions) {
