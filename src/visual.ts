@@ -35,20 +35,22 @@ import IVisual = powerbi.extensibility.visual.IVisual;
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { createRoot } from "react-dom/client";
-import App from "./react/App";
+import ReactCircleCard from "./component";
 
 import "./../style/visual.less";
 
 export class Visual implements IVisual {
     private target: HTMLElement;
-    private reactRoot: React.ReactElement<any, any>;
+    private reactRoot: React.ComponentElement<any, any>;
 
     constructor(options: VisualConstructorOptions) {
         this.target = options.element;
         const root = createRoot(this.target);
-        root.render(React.createElement(App, {}));
+        root.render(React.createElement(ReactCircleCard, {}));
     }
 
-    public update(options: VisualUpdateOptions) {}
+    public update(options: VisualUpdateOptions) {
+
+    }
 
 }
