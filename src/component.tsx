@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useState } from "react";
 import { Gantt, type Task } from "gantt-task-react";
-// import { TaskListHeaderDefault } from "./custom-components/task-list-header-custom";
-// import { TaskListTableDefault } from "./custom-components/task-list-table-custom";
+import { TaskListHeaderDefault } from "./custom-components/task-list-header-custom";
+import { TaskListTableDefault } from "./custom-components/task-list-table-custom";
 import "gantt-task-react/dist/index.css";
 
 const currentDate: Date = new Date();

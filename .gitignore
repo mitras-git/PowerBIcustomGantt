@@ -17,3 +17,5 @@ node_modules/
 .tmp/drop/visual.css.map
 .tmp/drop/visual.js
 .tmp/drop/visual.js.map
+webpack.statistics.dev.html
+webpack.statistics.dev.html
