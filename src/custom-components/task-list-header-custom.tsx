@@ -1,5 +1,5 @@
 import * as React from "react";
-import styles from "./../styles/task-list-header.module.css";
+import styles from "/task-list-header.module.css";
 
 export const TaskListHeaderDefault: React.FC<{
   headerHeight: number;
