@@ -35,39 +35,37 @@ const initialTasks: Task[] = [
         type: "task",
         project: "TestProject",
     },
-]
+];
 
-// const [tasks, setTasks] = useState<Task[]>(initialTasks);
+export const ReactCircleCard: React.FC = () => {
+    const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
-// const handleExpanderClick = (task: Task) => {
-//     const updatedTasks = tasks.map(t =>
-//         t.id === task.id ? { ...t, hideChildren: !t.hideChildren } : t
-//     );
-//     setTasks(updatedTasks)
-// };
+    const handleExpanderClick = (task: Task) => {
+        const updatedTasks = tasks.map(t =>
+            t.id === task.id ? { ...t, hideChildren: !t.hideChildren } : t
+        );
+        setTasks(updatedTasks);
+    };
 
-export class ReactCircleCard extends React.Component<{}>{
-    render(){
-        const tasks = initialTasks;
-
-        return (
-            <div>
-                <div className="circleCard">
-                    Hello, React!<br></br>
-                    Hello from Mac!
-                    {currentDate.getFullYear()}
-                </div>
-                <div style={{ padding: "5px", maxWidth: "100vw", overflowX: "auto" }}>
-                    <h1>Gantt Chart</h1>
-                    <Gantt tasks={tasks} 
-                    // onExpanderClick={handleExpanderClick}
+    return (
+        <div>
+            <div className="circleCard">
+                Hello, React!<br />
+                Hello from Mac!
+                {currentDate.getFullYear()}
+            </div>
+            <div style={{ padding: "5px", maxWidth: "100vw", overflowX: "auto" }}>
+                <h1>Gantt Chart</h1>
+                <Gantt
+                    tasks={tasks}
+                    onExpanderClick={handleExpanderClick}
                     TaskListHeader={TaskListHeaderDefault}
                     TaskListTable={TaskListTableDefault}
-                    locale={"en-GB"} />
-                </div>
+                    locale={"en-GB"}
+                />
             </div>
-        )
-    }
-}
+        </div>
+    );
+};
 
 export default ReactCircleCard;
