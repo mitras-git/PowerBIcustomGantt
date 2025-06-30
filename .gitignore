@@ -18,4 +18,3 @@ node_modules/
 .tmp/drop/visual.js
 .tmp/drop/visual.js.map
 webpack.statistics.dev.html
-webpack.statistics.dev.html
