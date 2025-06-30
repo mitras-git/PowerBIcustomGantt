@@ -1,8 +1,12 @@
 import * as React from "react";
 import { useState } from "react";
-import { Gantt, type Task } from "gantt-task-react";
+
+import { Gantt, type Task, ViewMode } from "gantt-task-react";
+import { ViewSwitcher } from "./components/view-switcher"
+
 import { TaskListHeaderDefault } from "./custom-components/task-list-header-custom";
 import { TaskListTableDefault } from "./custom-components/task-list-table-custom";
+
 import "gantt-task-react/dist/index.css";
 
 const currentDate: Date = new Date();
@@ -39,6 +43,18 @@ const initialTasks: Task[] = [
 
 export const CustomGanttChart: React.FC = () => {
     const [tasks, setTasks] = useState<Task[]>(initialTasks);
+    const [view, setView] = useState<ViewMode>(ViewMode.Month);
+    const [isChecked, setIsChecked] = React.useState(true);
+    
+    let columnWidth = 65;
+
+    if (view === ViewMode.Year) {
+    columnWidth = 300;
+    } else if (view === ViewMode.Month) {
+    columnWidth = 200;
+    } else if (view === ViewMode.Week) {
+    columnWidth = 150;
+    }
 
     const handleExpanderClick = (task: Task) => {
         const updatedTasks = tasks.map(t =>
@@ -56,12 +72,19 @@ export const CustomGanttChart: React.FC = () => {
             </div>
             <div style={{ padding: "5px", maxWidth: "100vw", overflowX: "auto" }}>
                 <h1>Gantt Chart</h1>
+                <ViewSwitcher
+                    onViewModeChange={viewMode => setView(viewMode)}
+                    onViewListChange={setIsChecked}
+                    isChecked={isChecked}
+                />
                 <Gantt
                     tasks={tasks}
                     onExpanderClick={handleExpanderClick}
                     TaskListHeader={TaskListHeaderDefault}
                     TaskListTable={TaskListTableDefault}
                     locale={"en-GB"}
+                    listCellWidth={isChecked ? "155px" : ""}
+                    columnWidth={columnWidth}
                 />
             </div>
         </div>
