@@ -83,6 +83,7 @@ export const CustomGanttChart: React.FC = () => {
                     TaskListHeader={TaskListHeaderDefault}
                     TaskListTable={TaskListTableDefault}
                     locale={"en-GB"}
+                    viewMode={view}
                     listCellWidth={isChecked ? "155px" : ""}
                     columnWidth={columnWidth}
                 />
