@@ -1,5 +1,5 @@
 import * as React from "react";
-import "gantt-task-react/dist/index.css";
+import "./index.css";
 import { ViewMode } from "gantt-task-react";
 
 type ViewSwitcherProps = {
@@ -8,11 +8,7 @@ type ViewSwitcherProps = {
   onViewModeChange: (viewMode: ViewMode) => void;
 };
 
-export const ViewSwitcher: React.FC<ViewSwitcherProps> = ({
-  onViewModeChange,
-  onViewListChange,
-  isChecked,
-}) => {
+export const ViewSwitcher: React.FC<ViewSwitcherProps> = ({ onViewModeChange, onViewListChange, isChecked }) => {
   return (
     <div className="ViewContainer">
       <button
