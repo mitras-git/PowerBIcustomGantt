@@ -7,6 +7,10 @@ import { ViewSwitcher } from "./components/view-switcher";
 
 const App: React.FC = () => {
   const currentDate: Date = new Date();
+  const barBackground: string = "#c88f8b";
+  const barProgressColor: string = "#911f16";
+  const projectBackground:string = "#e6a9a0"
+  const projectProgressColor: string = "#d67162";
 
   const initialTasks: Task[] = [
     {
@@ -46,7 +50,7 @@ const App: React.FC = () => {
   if (view === ViewMode.Year) {
     columnWidth = 300;
   } else if (view === ViewMode.Month) {
-    columnWidth = 200;
+    columnWidth = 75;
   } else if (view === ViewMode.Week) {
     columnWidth = 150;
   }
@@ -66,8 +70,13 @@ const App: React.FC = () => {
         onViewListChange={setIsChecked}
         isChecked={isChecked}
       />
-      <Gantt tasks={tasks}
+      <Gantt 
+        tasks={tasks}
         viewMode={view}
+        barProgressColor={barProgressColor}
+        barBackgroundColor={barBackground}
+        projectBackgroundColor={projectBackground}
+        projectProgressColor={projectProgressColor}
         onExpanderClick={handleExpanderClick}
         locale={"en-GB"}
         TaskListHeader={TaskListHeaderDefault}
