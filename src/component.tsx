@@ -37,6 +37,7 @@ const initialTasks: Task[] = [
         end: new Date(2025, 5, 15),
         progress: 75,
         type: "task",
+        dependencies: ["1"],
         project: "TestProject",
     },
 ];
