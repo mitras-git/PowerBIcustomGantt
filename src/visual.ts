@@ -28,6 +28,7 @@
 import powerbi from "powerbi-visuals-api";
 
 import DataView = powerbi.DataView;
+import DataViewCategorical = powerbi.DataViewCategorical;
 import VisualConstructorOptions = powerbi.extensibility.visual.VisualConstructorOptions;
 import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;
 import IVisual = powerbi.extensibility.visual.IVisual;
@@ -50,6 +51,11 @@ export class Visual implements IVisual {
     }
 
     public update(options: VisualUpdateOptions) {
+
+        const dataView: DataView = options.dataViews[0];
+        const categoricalDataView: DataViewCategorical = dataView.categorical;
+
+        console.log(categoricalDataView.categories[0].values);
 
     }
 

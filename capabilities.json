@@ -1,14 +1,34 @@
 {
     "dataRoles": [
         {
-            "displayName": "Category Data",
-            "name": "category",
+            "displayName": "Task Name Data",
+            "name": "taskName",
             "kind": "Grouping"
         },
         {
-            "displayName": "Measure Data",
-            "name": "measure",
-            "kind": "Measure"
+            "displayName": "Task ID Data",
+            "name": "taskId",
+            "kind": "Grouping"
+        },
+        {
+            "displayName": "Start Date Data",
+            "name": "startDate",
+            "kind": "Grouping"
+        },
+        {
+            "displayName": "End Date Data",
+            "name": "endDate",
+            "kind": "Grouping"
+        },
+        {
+            "displayName": "Progress Data",
+            "name": "progress",
+            "kind": "Grouping"
+        },
+        {
+            "displayName": "Dependencies Data",
+            "name": "dependencies",
+            "kind": "Grouping"
         }
     ],
     "objects": {
@@ -42,7 +62,7 @@
                         "fill": {}
                     }
                 },
-                 "fontSize": {
+                "fontSize": {
                     "type": {
                         "formatting": {
                             "fontSize": true
@@ -56,21 +76,41 @@
         {
             "categorical": {
                 "categories": {
-                    "for": {
-                        "in": "category"
-                    },
-                    "dataReductionAlgorithm": {
-                        "top": {}
-                    }
-                },
-                "values": {
                     "select": [
                         {
                             "bind": {
-                                "to": "measure"
+                                "to": "taskName"
+                            }
+                        },
+                        {
+                            "bind": {
+                                "to": "taskId"
+                            }
+                        },
+                        {
+                            "bind": {
+                                "to": "startDate"
+                            }
+                        },
+                        {
+                            "bind": {
+                                "to": "endDate"
+                            }
+                        },
+                        {
+                            "bind": {
+                                "to": "dependencies"
+                            }
+                        },
+                        {
+                            "bind": {
+                                "to": "progress"
                             }
                         }
-                    ]
+                    ],
+                    "dataReductionAlgorithm": {
+                        "top": {}
+                    }
                 }
             }
         }
