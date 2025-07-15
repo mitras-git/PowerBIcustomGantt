@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
+        "jsx": "react",
+        "types": ["react", "react-dom"],
         "allowJs": false,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
@@ -15,5 +17,9 @@
     },
     "files": [
         "./src/visual.ts"
+    ],
+    "include": [
+        "./src/**/*",
+        "./styles/**/*.css"
     ]
 }

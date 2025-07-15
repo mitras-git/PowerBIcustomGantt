@@ -26,52 +26,37 @@
 "use strict";
 
 import powerbi from "powerbi-visuals-api";
-import { FormattingSettingsService } from "powerbi-visuals-utils-formattingmodel";
-import "./../style/visual.less";
 
+import DataView = powerbi.DataView;
+import DataViewCategorical = powerbi.DataViewCategorical;
 import VisualConstructorOptions = powerbi.extensibility.visual.VisualConstructorOptions;
 import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;
 import IVisual = powerbi.extensibility.visual.IVisual;
 
-import { VisualFormattingSettingsModel } from "./settings";
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
+import CustomGanttChart from "./component";
+
+import "./../style/visual.less";
 
 export class Visual implements IVisual {
     private target: HTMLElement;
-    private updateCount: number;
-    private textNode: Text;
-    private formattingSettings: VisualFormattingSettingsModel;
-    private formattingSettingsService: FormattingSettingsService;
+    private reactRoot: React.ComponentElement<any, any>;
 
     constructor(options: VisualConstructorOptions) {
-        console.log('Visual constructor', options);
-        this.formattingSettingsService = new FormattingSettingsService();
         this.target = options.element;
-        this.updateCount = 0;
-        if (document) {
-            const new_p: HTMLElement = document.createElement("p");
-            new_p.appendChild(document.createTextNode("Update count:"));
-            const new_em: HTMLElement = document.createElement("em");
-            this.textNode = document.createTextNode(this.updateCount.toString());
-            new_em.appendChild(this.textNode);
-            new_p.appendChild(new_em);
-            this.target.appendChild(new_p);
-        }
+        const root = createRoot(this.target);
+        root.render(React.createElement(CustomGanttChart, {}));
     }
 
     public update(options: VisualUpdateOptions) {
-        this.formattingSettings = this.formattingSettingsService.populateFormattingSettingsModel(VisualFormattingSettingsModel, options.dataViews[0]);
 
-        console.log('Visual update', options);
-        if (this.textNode) {
-            this.textNode.textContent = (this.updateCount++).toString();
-        }
+        const dataView: DataView = options.dataViews[0];
+        const categoricalDataView: DataViewCategorical = dataView.categorical;
+
+        console.log(categoricalDataView.categories[0].values);
+
     }
 
-    /**
-     * Returns properties pane formatting model content hierarchies, properties and latest formatting values, Then populate properties pane.
-     * This method is called once every time we open properties pane or when the user edit any format property. 
-     */
-    public getFormattingModel(): powerbi.visuals.FormattingModel {
-        return this.formattingSettingsService.buildFormattingModel(this.formattingSettings);
-    }
 }
