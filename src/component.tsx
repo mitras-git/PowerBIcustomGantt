@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Gantt, type Task, ViewMode } from "gantt-task-react";
 import { ViewSwitcher } from "./components/view-switcher"
@@ -11,7 +11,8 @@ import "gantt-task-react/dist/index.css";
 
 const currentDate: Date = new Date();
 
-const initialTasks: Task[] = [
+// Fallback tasks when no data is provided
+const fallbackTasks: Task[] = [
     {
         name: "Project Test",
         id: "TestProject",
@@ -42,10 +43,21 @@ const initialTasks: Task[] = [
     },
 ];
 
-export const CustomGanttChart: React.FC = () => {
-    const [tasks, setTasks] = useState<Task[]>(initialTasks);
+interface CustomGanttChartProps {
+    tasks?: Task[];
+}
+
+export const CustomGanttChart: React.FC<CustomGanttChartProps> = ({ tasks: propTasks }) => {
+    const [tasks, setTasks] = useState<Task[]>(propTasks && propTasks.length > 0 ? propTasks : fallbackTasks);
     const [view, setView] = useState<ViewMode>(ViewMode.Month);
     const [isChecked, setIsChecked] = React.useState(true);
+
+    // Update tasks when prop changes
+    useEffect(() => {
+        if (propTasks && propTasks.length > 0) {
+            setTasks(propTasks);
+        }
+    }, [propTasks]);
     
     let columnWidth = 65;
 
