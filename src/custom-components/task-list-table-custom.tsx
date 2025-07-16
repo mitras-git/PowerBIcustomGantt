@@ -1,4 +1,4 @@
-import * as React from "react"; 
+import * as React from "react";
 import { useMemo } from "react";
 import * as styles from "./task-list-table.module.css";
 import { type Task } from "gantt-task-react";
@@ -64,6 +64,13 @@ export const TaskListTableDefault: React.FC<{
             expanderSymbol = "▶";
           }
 
+          let taskProgressComplete: () => boolean = () => {
+            if (t.progress) {
+              return t.progress === 100;
+            }
+            return false;
+          };
+
           return (
             <div
               className={styles.taskListTableRow}
@@ -95,7 +102,7 @@ export const TaskListTableDefault: React.FC<{
                   >
                     {expanderSymbol}
                   </div>
-                  <div>{t.name}</div>
+                  <div className={taskProgressComplete() ? styles.taskListOnComplete : "" }>{t.name}</div>
                 </div>
               </div>
               {/* <div

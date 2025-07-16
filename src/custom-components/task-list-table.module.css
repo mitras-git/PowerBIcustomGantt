@@ -4,6 +4,10 @@
   border-left: #e6e4e4 1px solid;
 }
 
+.taskListOnComplete {
+  color: green
+}
+
 .taskListTableRow {
   display: table-row;
   text-overflow: ellipsis;
