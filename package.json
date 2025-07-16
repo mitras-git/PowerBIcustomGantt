@@ -9,6 +9,7 @@
   "license": "MIT",
   "scripts": {
     "start": "powershell -ExecutionPolicy Bypass -File ./start.ps1",
+    "gantt-pull": "powershell Remove-Item -Recurse -Force node_modules/gantt-task-react; npm install gantt-task-react@github:mitras-git/gantt-task-react#variant/PowerBI --force",
     "package": "pbiviz package",
     "lint": "npx eslint ."
   },
