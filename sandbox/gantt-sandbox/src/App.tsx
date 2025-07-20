@@ -7,10 +7,16 @@ import { ViewSwitcher } from "./components/view-switcher";
 
 const App: React.FC = () => {
   const currentDate: Date = new Date();
-  const barBackground: string = "#c88f8b";
-  const barProgressColor: string = "#911f16";
-  const projectBackground:string = "#e6a9a0"
-  const projectProgressColor: string = "#d67162";
+
+  // Color state management for Power BI format preferences demo
+  const [colors, setColors] = useState({
+    barProgress: "#1f77b4",
+    barSelected: "#ff7f0e", 
+    projectProgress: "#2ca02c",
+    projectSelected: "#d62728",
+    milestone: "#9467bd",
+    milestoneSelected: "#8c564b"
+  });
 
   const initialTasks: Task[] = [
     {
@@ -40,6 +46,15 @@ const App: React.FC = () => {
       type: "task",
       project: "TestProject",
     },
+    {
+      id: "3",
+      name: "Milestone 1",
+      start: new Date(2025, 5, 16),
+      end: new Date(2025, 5, 16),
+      progress: 0,
+      type: "milestone",
+      project: "TestProject",
+    },
   ];
 
   const [view, setView] = useState<ViewMode>(ViewMode.Month);
@@ -62,9 +77,84 @@ const App: React.FC = () => {
     setTasks(updatedTasks);
   };
 
+  const handleColorChange = (colorType: keyof typeof colors, value: string) => {
+    setColors(prev => ({ ...prev, [colorType]: value }));
+  };
+
   return (
-    <div style={{ padding: "20px", maxWidth: "75vw", overflowX: "auto" }}>
-      <h1>Gantt Chart</h1>
+    <div style={{ padding: "20px", maxWidth: "90vw", overflowX: "auto" }}>
+      <h1>Power BI Custom Gantt Chart - Color Customization Demo</h1>
+      
+      {/* Color Customization Panel - simulating Power BI format panel */}
+      <div style={{ 
+        background: "#f8f9fa", 
+        padding: "15px", 
+        marginBottom: "20px", 
+        borderRadius: "8px",
+        border: "1px solid #dee2e6"
+      }}>
+        <h3 style={{ margin: "0 0 15px 0", color: "#495057" }}>Gantt Colors (Power BI Format Panel)</h3>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "10px" }}>
+          <div>
+            <label style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}>Task Progress Color:</label>
+            <input 
+              type="color" 
+              value={colors.barProgress} 
+              onChange={(e) => handleColorChange("barProgress", e.target.value)}
+              style={{ width: "100%", height: "35px", border: "1px solid #ccc", borderRadius: "4px" }}
+            />
+          </div>
+          <div>
+            <label style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}>Task Selected Color:</label>
+            <input 
+              type="color" 
+              value={colors.barSelected} 
+              onChange={(e) => handleColorChange("barSelected", e.target.value)}
+              style={{ width: "100%", height: "35px", border: "1px solid #ccc", borderRadius: "4px" }}
+            />
+          </div>
+          <div>
+            <label style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}>Project Progress Color:</label>
+            <input 
+              type="color" 
+              value={colors.projectProgress} 
+              onChange={(e) => handleColorChange("projectProgress", e.target.value)}
+              style={{ width: "100%", height: "35px", border: "1px solid #ccc", borderRadius: "4px" }}
+            />
+          </div>
+          <div>
+            <label style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}>Project Selected Color:</label>
+            <input 
+              type="color" 
+              value={colors.projectSelected} 
+              onChange={(e) => handleColorChange("projectSelected", e.target.value)}
+              style={{ width: "100%", height: "35px", border: "1px solid #ccc", borderRadius: "4px" }}
+            />
+          </div>
+          <div>
+            <label style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}>Milestone Color:</label>
+            <input 
+              type="color" 
+              value={colors.milestone} 
+              onChange={(e) => handleColorChange("milestone", e.target.value)}
+              style={{ width: "100%", height: "35px", border: "1px solid #ccc", borderRadius: "4px" }}
+            />
+          </div>
+          <div>
+            <label style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}>Milestone Selected Color:</label>
+            <input 
+              type="color" 
+              value={colors.milestoneSelected} 
+              onChange={(e) => handleColorChange("milestoneSelected", e.target.value)}
+              style={{ width: "100%", height: "35px", border: "1px solid #ccc", borderRadius: "4px" }}
+            />
+          </div>
+        </div>
+        <p style={{ margin: "10px 0 0 0", fontSize: "12px", color: "#6c757d" }}>
+          * Click on tasks/projects to see selected colors. The colors above will be available in Power BI's format panel.
+        </p>
+      </div>
+
       <ViewSwitcher
         onViewModeChange={viewMode => setView(viewMode)}
         onViewListChange={setIsChecked}
@@ -73,10 +163,12 @@ const App: React.FC = () => {
       <Gantt 
         tasks={tasks}
         viewMode={view}
-        barProgressColor={barProgressColor}
-        barBackgroundColor={barBackground}
-        projectBackgroundColor={projectBackground}
-        projectProgressColor={projectProgressColor}
+        barProgressColor={colors.barProgress}
+        barProgressSelectedColor={colors.barSelected}
+        projectProgressColor={colors.projectProgress}
+        projectProgressSelectedColor={colors.projectSelected}
+        milestoneBackgroundColor={colors.milestone}
+        milestoneBackgroundSelectedColor={colors.milestoneSelected}
         onExpanderClick={handleExpanderClick}
         locale={"en-GB"}
         TaskListHeader={TaskListHeaderDefault}
