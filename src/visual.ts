@@ -32,24 +32,31 @@ import DataViewCategorical = powerbi.DataViewCategorical;
 import VisualConstructorOptions = powerbi.extensibility.visual.VisualConstructorOptions;
 import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;
 import IVisual = powerbi.extensibility.visual.IVisual;
+import IVisualHost = powerbi.extensibility.visual.IVisualHost;
+
+import { FormattingSettingsService } from "powerbi-visuals-utils-formattingmodel";
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { createRoot } from "react-dom/client";
 import CustomGanttChart from "./component";
-import { type Task } from "gantt-task-react";
+import { Task, GanttColors } from "./types";
 
 import { DataRoleIndex, getDataRoleIndex } from "./helper";
+import { VisualFormattingSettingsModel } from "./settings";
 
 import "./../style/visual.less";
 
 export class Visual implements IVisual {
     private target: HTMLElement;
     private reactRoot: any;
+    private formattingSettings: VisualFormattingSettingsModel;
+    private formattingSettingsService: FormattingSettingsService;
 
     constructor(options: VisualConstructorOptions) {
         this.target = options.element;
         this.reactRoot = createRoot(this.target);
+        this.formattingSettingsService = new FormattingSettingsService();
         this.reactRoot.render(React.createElement(CustomGanttChart, { tasks: [] }));
     }
 
@@ -118,15 +125,31 @@ export class Visual implements IVisual {
         return tasks;
     }
 
+    private getGanttColors(): GanttColors {
+        const colors: GanttColors = {};
+        if (this.formattingSettings) {
+            const card = this.formattingSettings.ganttColorsCard;
+            if (card.barProgress.value?.value) colors.barProgress = card.barProgress.value.value;
+            if (card.barSelected.value?.value) colors.barSelected = card.barSelected.value.value;
+            if (card.projectProgress.value?.value) colors.projectProgress = card.projectProgress.value.value;
+            if (card.projectSelected.value?.value) colors.projectSelected = card.projectSelected.value.value;
+            if (card.milestone.value?.value) colors.milestone = card.milestone.value.value;
+            if (card.milestoneSelected.value?.value) colors.milestoneSelected = card.milestoneSelected.value.value;
+        }
+        return colors;
+    }
     public update(options: VisualUpdateOptions) {
+        // Get formatting settings
+        this.formattingSettings = this.formattingSettingsService.populateFormattingSettingsModel(VisualFormattingSettingsModel, options.dataViews?.[0]);
+        
         if (!options.dataViews || options.dataViews.length === 0) {
-            this.reactRoot.render(React.createElement(CustomGanttChart, { tasks: [] }));
+            this.reactRoot.render(React.createElement(CustomGanttChart, { tasks: [], colors: this.getGanttColors() }));
             return;
         }
 
         const dataView: DataView = options.dataViews[0];
         if (!dataView || !dataView.categorical) {
-            this.reactRoot.render(React.createElement(CustomGanttChart, { tasks: [] }));
+            this.reactRoot.render(React.createElement(CustomGanttChart, { tasks: [], colors: this.getGanttColors() }));
             return;
         }
 
@@ -135,10 +158,21 @@ export class Visual implements IVisual {
         const categoricalDataView: DataViewCategorical = dataView.categorical;
 
         const tasks = this.transformDataToTasks(categoricalDataView);
+        const colors = this.getGanttColors();
+        
         this.reactRoot.render(React.createElement(CustomGanttChart, {
             tasks,
             width: options.viewport.width,
-            height: options.viewport.height
+            height: options.viewport.height,
+            colors
         }));
+    }
+
+    /**
+     * Returns properties pane formatting model content hierarchies, properties and latest formatting values, Then populate properties pane.
+     * This method is called once every time we open Properties pane or when the user edit any format property. 
+     */
+    public getFormattingModel(): powerbi.visuals.FormattingModel {
+        return this.formattingSettingsService.buildFormattingModel(this.formattingSettings);
     }
 }

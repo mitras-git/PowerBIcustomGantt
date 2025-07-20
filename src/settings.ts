@@ -72,12 +72,65 @@ class DataPointCardSettings extends FormattingSettingsCard {
 }
 
 /**
+ * Gantt Colors Formatting Card
+ */
+class GanttColorsCardSettings extends FormattingSettingsCard {
+    barProgress = new formattingSettings.ColorPicker({
+        name: "barProgress",
+        displayName: "Task Progress Color",
+        value: { value: "#1f77b4" }
+    });
+
+    barSelected = new formattingSettings.ColorPicker({
+        name: "barSelected",
+        displayName: "Task Selected Color",
+        value: { value: "#ff7f0e" }
+    });
+
+    projectProgress = new formattingSettings.ColorPicker({
+        name: "projectProgress",
+        displayName: "Project Progress Color",
+        value: { value: "#2ca02c" }
+    });
+
+    projectSelected = new formattingSettings.ColorPicker({
+        name: "projectSelected",
+        displayName: "Project Selected Color",
+        value: { value: "#d62728" }
+    });
+
+    milestone = new formattingSettings.ColorPicker({
+        name: "milestone",
+        displayName: "Milestone Color",
+        value: { value: "#9467bd" }
+    });
+
+    milestoneSelected = new formattingSettings.ColorPicker({
+        name: "milestoneSelected",
+        displayName: "Milestone Selected Color",
+        value: { value: "#8c564b" }
+    });
+
+    name: string = "ganttColors";
+    displayName: string = "Gantt Colors";
+    slices: Array<FormattingSettingsSlice> = [
+        this.barProgress, 
+        this.barSelected, 
+        this.projectProgress, 
+        this.projectSelected, 
+        this.milestone, 
+        this.milestoneSelected
+    ];
+}
+
+/**
 * visual settings model class
 *
 */
 export class VisualFormattingSettingsModel extends FormattingSettingsModel {
     // Create formatting settings model formatting cards
     dataPointCard = new DataPointCardSettings();
+    ganttColorsCard = new GanttColorsCardSettings();
 
-    cards = [this.dataPointCard];
+    cards = [this.dataPointCard, this.ganttColorsCard];
 }
