@@ -71,8 +71,6 @@ export class Visual implements IVisual {
         const indices = getDataRoleIndex(categoricalDataView);
 
         for (let i = 0; i < dataLength; i++) {
-            // Index 0: taskName, Index 1: taskId, Index 2: startDate, Index 3: endDate, Index 4: dependencies, Index 5: progress
-
             const taskName = (categoricalDataView.categories[indices[DataRoleIndex.TaskName]]?.values[i] as string) || `Task ${i + 1}`;
             const taskId = (categoricalDataView.categories[indices[DataRoleIndex.TaskId]]?.values[i] as string) || `task-${i + 1}`;
             const startDateValue = categoricalDataView.categories[indices[DataRoleIndex.StartDate]]?.values[i];
@@ -110,14 +108,11 @@ export class Visual implements IVisual {
 
         tasks.forEach(task => {
             if (task.project) {
-                // console.log("If level 1 triggered for task:", task.name);
                 const parentTask = taskMap.get(task.project);
                 if (parentTask) {
-                    // console.log("If level 2 triggered for task:", task.name);
                     task.heirarchyLevel = (parentTask.heirarchyLevel || 0) + 1;
                 }
             } else {
-                // console.log("Else 0 triggered for task:", task.name);
                 task.heirarchyLevel = 0;
             }
         });
