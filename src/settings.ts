@@ -45,7 +45,7 @@ class GanttColorsCardSettings extends FormattingSettingsCard {
     barSelected = new formattingSettings.ColorPicker({
         name: "barSelected",
         displayName: "Task Selected Color",
-        value: { value: "#ff7f0e" }
+        value: { value: "#1f38b4" }
     });
 
     projectProgress = new formattingSettings.ColorPicker({
@@ -57,19 +57,19 @@ class GanttColorsCardSettings extends FormattingSettingsCard {
     projectSelected = new formattingSettings.ColorPicker({
         name: "projectSelected",
         displayName: "Project Selected Color",
-        value: { value: "#d62728" }
+        value: { value: "#1e661e" }
     });
 
     milestone = new formattingSettings.ColorPicker({
         name: "milestone",
         displayName: "Milestone Color",
-        value: { value: "#9467bd" }
+        value: { value: "#ffff05" }
     });
 
     milestoneSelected = new formattingSettings.ColorPicker({
         name: "milestoneSelected",
         displayName: "Milestone Selected Color",
-        value: { value: "#8c564b" }
+        value: { value: "#baba02" }
     });
 
     name: string = "ganttColors";
