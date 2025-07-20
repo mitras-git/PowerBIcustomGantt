@@ -39,6 +39,8 @@ import { createRoot } from "react-dom/client";
 import CustomGanttChart from "./component";
 import { type Task } from "gantt-task-react";
 
+import { DataRoleIndex, getDataRoleIndex } from "./helper";
+
 import "./../style/visual.less";
 
 export class Visual implements IVisual {
@@ -59,36 +61,61 @@ export class Visual implements IVisual {
         const tasks: Task[] = [];
         const dataLength = categoricalDataView.categories[0].values.length;
 
+        const indices = getDataRoleIndex(categoricalDataView);
+
         for (let i = 0; i < dataLength; i++) {
-            // Based on capabilities.json mapping:
             // Index 0: taskName, Index 1: taskId, Index 2: startDate, Index 3: endDate, Index 4: dependencies, Index 5: progress
-            const taskName = (categoricalDataView.categories[0]?.values[i] as string) || `Task ${i + 1}`;
-            const taskId = (categoricalDataView.categories[1]?.values[i] as string) || `task-${i + 1}`;
-            const startDateValue = categoricalDataView.categories[2]?.values[i];
-            const endDateValue = categoricalDataView.categories[3]?.values[i];
-            const dependencies = (categoricalDataView.categories[4]?.values[i] as string) || "";
-            const progressValue = categoricalDataView.categories[5]?.values[i];
+
+            const taskName = (categoricalDataView.categories[indices[DataRoleIndex.TaskName]]?.values[i] as string) || `Task ${i + 1}`;
+            console.log("Currently working on:", taskName)
+            const taskId = (categoricalDataView.categories[indices[DataRoleIndex.TaskId]]?.values[i] as string) || `task-${i + 1}`;
+            const startDateValue = categoricalDataView.categories[indices[DataRoleIndex.StartDate]]?.values[i];
+            const endDateValue = categoricalDataView.categories[indices[DataRoleIndex.EndDate]]?.values[i];
+            // const dependencies = (categoricalDataView.categories[indices[DataRoleIndex.Dependencies]]?.values[i] as string) || "";
+            const progressValue = categoricalDataView.categories[indices[DataRoleIndex.Progress]]?.values[i];
 
             // Handle date parsing
             const startDate = startDateValue ? new Date(startDateValue as any) : new Date();
-            const endDate = endDateValue ? new Date(endDateValue as any) : new Date(startDate.getTime() + 24 * 60 * 60 * 1000); // Add 1 day if no end date
+            const endDate = endDateValue ? new Date(endDateValue as any) : new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
 
             // Handle progress parsing
-            const progress = typeof progressValue === 'number' ? progressValue : 
-                            typeof progressValue === 'string' ? parseFloat(progressValue) || 0 : 0;
+            const progress = typeof progressValue === 'number' ? progressValue :
+                typeof progressValue === 'string' ? parseFloat(progressValue) || 0 : 0;
+
 
             const task: Task = {
                 id: taskId,
                 name: taskName,
                 start: startDate,
                 end: endDate,
-                progress: Math.max(0, Math.min(100, progress)), // Clamp between 0-100
+                progress: progress,
                 type: "task",
-                dependencies: dependencies ? dependencies.split(',').map(dep => dep.trim()).filter(dep => dep) : undefined
+                // dependencies: dependencies ? dependencies.split(',').map(dep => dep.trim()).filter(dep => dep) : undefined
+                heirarchyLevel: null, // Default hierarchy level
             };
 
             tasks.push(task);
+            console.log(task)
         }
+        return this.hierarchyCalculation(tasks);
+    }
+
+    private hierarchyCalculation(tasks: Task[]): Task[] {
+        const taskMap: Map<string, Task> = new Map(tasks.map(task => [task.id, task]));
+
+        tasks.forEach(task => {
+            if (task.project) {
+                // console.log("If level 1 triggered for task:", task.name);
+                const parentTask = taskMap.get(task.project);
+                if (parentTask) {
+                    // console.log("If level 2 triggered for task:", task.name);
+                    task.heirarchyLevel = (parentTask.heirarchyLevel || 0) + 1;
+                }
+            } else {
+                // console.log("Else 0 triggered for task:", task.name);
+                task.heirarchyLevel = 0;
+            }
+        });
 
         return tasks;
     }
@@ -106,8 +133,6 @@ export class Visual implements IVisual {
         }
 
         const categoricalDataView: DataViewCategorical = dataView.categorical;
-
-        console.log(categoricalDataView.categories[0].values);
 
         // Transform data to tasks and pass to component
         const tasks = this.transformDataToTasks(categoricalDataView);

@@ -78,13 +78,13 @@ export const CustomGanttChart: React.FC<CustomGanttChartProps> = ({ tasks: propT
 
     return (
         <div>
-            <div className="circleCard">
+            {/* <div className="circleCard">
                 Hello, React!<br />
                 Hello from Mac!
                 {currentDate.getFullYear()}
-            </div>
+            </div> */}
             <div style={{ padding: "5px", maxWidth: "100vw", overflowX: "auto" }}>
-                <h1>Gantt Chart</h1>
+                {/* <h1>Gantt Chart</h1> */}
                 <ViewSwitcher
                     onViewModeChange={viewMode => setView(viewMode)}
                     onViewListChange={setIsChecked}

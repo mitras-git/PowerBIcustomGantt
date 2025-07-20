@@ -64,6 +64,9 @@ export const TaskListTableDefault: React.FC<{
             expanderSymbol = "▶";
           }
 
+          // console.log("Value of t.heirarchy level (t-list):", t.heirarchyLevel);
+          const indentPx = (t.heirarchyLevel || 0) * 20;
+
           let taskProgressComplete: () => boolean = () => {
             if (t.progress) {
               return t.progress === 100;
@@ -92,6 +95,7 @@ export const TaskListTableDefault: React.FC<{
                 {/* {t.name} */}
 
                 <div className={styles.taskListNameWrapper}>
+                  <div style={{ width: `${indentPx}px`, flexShrink: 0 }} />
                   <div
                     className={
                       expanderSymbol
