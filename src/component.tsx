@@ -45,9 +45,11 @@ const fallbackTasks: Task[] = [
 
 interface CustomGanttChartProps {
     tasks?: Task[];
+    width?: number;
+    height?: number;
 }
 
-export const CustomGanttChart: React.FC<CustomGanttChartProps> = ({ tasks: propTasks }) => {
+export const CustomGanttChart: React.FC<CustomGanttChartProps> = ({ tasks: propTasks, width, height }) => {
     const [tasks, setTasks] = useState<Task[]>(propTasks && propTasks.length > 0 ? propTasks : fallbackTasks);
     const [view, setView] = useState<ViewMode>(ViewMode.Month);
     const [isChecked, setIsChecked] = React.useState(true);
@@ -83,7 +85,7 @@ export const CustomGanttChart: React.FC<CustomGanttChartProps> = ({ tasks: propT
                 Hello from Mac!
                 {currentDate.getFullYear()}
             </div> */}
-            <div style={{ padding: "5px", maxWidth: "100vw", overflowX: "auto" }}>
+            <div style={{ padding: "5px", height, width, overflow: "auto" }}>
                 {/* <h1>Gantt Chart</h1> */}
                 <ViewSwitcher
                     onViewModeChange={viewMode => setView(viewMode)}
@@ -98,6 +100,7 @@ export const CustomGanttChart: React.FC<CustomGanttChartProps> = ({ tasks: propT
                     locale={"en-GB"}
                     viewMode={view}
                     listCellWidth={isChecked ? "155px" : ""}
+                    ganttHeight={height}
                     columnWidth={columnWidth}
                 />
             </div>

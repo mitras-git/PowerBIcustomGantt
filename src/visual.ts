@@ -67,7 +67,6 @@ export class Visual implements IVisual {
             // Index 0: taskName, Index 1: taskId, Index 2: startDate, Index 3: endDate, Index 4: dependencies, Index 5: progress
 
             const taskName = (categoricalDataView.categories[indices[DataRoleIndex.TaskName]]?.values[i] as string) || `Task ${i + 1}`;
-            console.log("Currently working on:", taskName)
             const taskId = (categoricalDataView.categories[indices[DataRoleIndex.TaskId]]?.values[i] as string) || `task-${i + 1}`;
             const startDateValue = categoricalDataView.categories[indices[DataRoleIndex.StartDate]]?.values[i];
             const endDateValue = categoricalDataView.categories[indices[DataRoleIndex.EndDate]]?.values[i];
@@ -95,7 +94,6 @@ export class Visual implements IVisual {
             };
 
             tasks.push(task);
-            console.log(task)
         }
         return this.hierarchyCalculation(tasks);
     }
@@ -132,10 +130,15 @@ export class Visual implements IVisual {
             return;
         }
 
+        const width = options.viewport.width;
+        const height = options.viewport.height;
         const categoricalDataView: DataViewCategorical = dataView.categorical;
 
-        // Transform data to tasks and pass to component
         const tasks = this.transformDataToTasks(categoricalDataView);
-        this.reactRoot.render(React.createElement(CustomGanttChart, { tasks }));
+        this.reactRoot.render(React.createElement(CustomGanttChart, {
+            tasks,
+            width: options.viewport.width,
+            height: options.viewport.height
+        }));
     }
 }
