@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useMemo } from "react";
 import * as styles from "./task-list-table.module.css";
-import { type Task } from "gantt-task-react";
+import { Task } from "../types";
 
 const localeDateStringCache: Record<string, string> = {};
 

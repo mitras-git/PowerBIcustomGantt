@@ -1,7 +1,8 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 
-import { Gantt, type Task, ViewMode } from "gantt-task-react";
+import { Gantt, ViewMode } from "gantt-task-react";
+import { Task, GanttColors } from "./types";
 import { ViewSwitcher } from "./components/view-switcher"
 
 import { TaskListHeaderDefault } from "./custom-components/task-list-header-custom";
@@ -47,9 +48,10 @@ interface CustomGanttChartProps {
     tasks?: Task[];
     width?: number;
     height?: number;
+    colors?: GanttColors;
 }
 
-export const CustomGanttChart: React.FC<CustomGanttChartProps> = ({ tasks: propTasks, width, height }) => {
+export const CustomGanttChart: React.FC<CustomGanttChartProps> = ({ tasks: propTasks, width, height, colors }) => {
     const [tasks, setTasks] = useState<Task[]>(propTasks && propTasks.length > 0 ? propTasks : fallbackTasks);
     const [view, setView] = useState<ViewMode>(ViewMode.Month);
     const [isChecked, setIsChecked] = React.useState(true);
@@ -102,6 +104,12 @@ export const CustomGanttChart: React.FC<CustomGanttChartProps> = ({ tasks: propT
                     listCellWidth={isChecked ? "155px" : ""}
                     ganttHeight={height}
                     columnWidth={columnWidth}
+                    barProgressColor={colors?.barProgress}
+                    barProgressSelectedColor={colors?.barSelected}
+                    projectProgressColor={colors?.projectProgress}
+                    projectProgressSelectedColor={colors?.projectSelected}
+                    milestoneBackgroundColor={colors?.milestone}
+                    milestoneBackgroundSelectedColor={colors?.milestoneSelected}
                 />
             </div>
         </div>
