@@ -6,6 +6,8 @@ export enum DataRoleIndex {
     TaskId,
     StartDate,
     EndDate,
+    AuctualStartDate,
+    AuctualEndDate,
     Dependencies,
     Progress
 }
@@ -15,6 +17,8 @@ enum TaskRoles {
     taskId = "taskId",
     startDate = "startDate",
     endDate = "endDate",
+    auctualStartDate = "actualStartDate",
+    auctualEndDate = "actualEndDate",
     dependencies = "dependencies",
     progress = "progress"
 }
@@ -35,6 +39,12 @@ export function getDataRoleIndex(categoricalDataView: DataViewCategorical): Data
                 break;
             case TaskRoles.endDate:
                 roleIndices[DataRoleIndex.EndDate] = i;
+                break;
+            case TaskRoles.auctualStartDate:
+                roleIndices[DataRoleIndex.AuctualStartDate] = i;
+                break;
+            case TaskRoles.auctualEndDate:
+                roleIndices[DataRoleIndex.AuctualEndDate] = i;
                 break;
             case TaskRoles.dependencies:
                 roleIndices[DataRoleIndex.Dependencies] = i;

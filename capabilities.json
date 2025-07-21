@@ -11,13 +11,23 @@
             "kind": "Grouping"
         },
         {
-            "displayName": "Start Date Data",
+            "displayName": "Planned Start Date Data",
             "name": "startDate",
             "kind": "Grouping"
         },
         {
-            "displayName": "End Date Data",
+            "displayName": "Planned End Date Data",
             "name": "endDate",
+            "kind": "Grouping"
+        },
+        {
+            "displayName": "Auctual Start Date Data",
+            "name": "actualStartDate",
+            "kind": "Grouping"
+        },
+        {
+            "displayName": "Auctual End Date Data",
+            "name": "actualEndDate",
             "kind": "Grouping"
         },
         {
@@ -114,6 +124,16 @@
                         {
                             "bind": {
                                 "to": "endDate"
+                            }
+                        },
+                        {
+                            "bind": {
+                                "to": "actualStartDate"
+                            }
+                        },
+                        {
+                            "bind": {
+                                "to": "actualEndDate"
                             }
                         },
                         {

@@ -75,12 +75,18 @@ export class Visual implements IVisual {
             const taskId = (categoricalDataView.categories[indices[DataRoleIndex.TaskId]]?.values[i] as string) || `task-${i + 1}`;
             const startDateValue = categoricalDataView.categories[indices[DataRoleIndex.StartDate]]?.values[i];
             const endDateValue = categoricalDataView.categories[indices[DataRoleIndex.EndDate]]?.values[i];
+            const auctualStartDateValue = categoricalDataView.categories[indices[DataRoleIndex.AuctualStartDate]]?.values[i];
+            const auctualEndDateValue = categoricalDataView.categories[indices[DataRoleIndex.AuctualEndDate]]?.values[i];
             // const dependencies = (categoricalDataView.categories[indices[DataRoleIndex.Dependencies]]?.values[i] as string) || "";
             const progressValue = categoricalDataView.categories[indices[DataRoleIndex.Progress]]?.values[i];
 
             // Handle date parsing
             const startDate = startDateValue ? new Date(startDateValue as any) : new Date();
             const endDate = endDateValue ? new Date(endDateValue as any) : new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+            const auctualStartDate = auctualStartDateValue ? new Date(auctualStartDateValue as any) : null;
+            const auctualEndDate = auctualEndDateValue ? new Date(auctualEndDateValue as any) : null;
+
+            const shouldCreateSplit = !!(auctualStartDate && auctualEndDate && startDate && endDate);
 
             // Handle progress parsing
             const progress = typeof progressValue === 'number' ? progressValue :
@@ -92,6 +98,9 @@ export class Visual implements IVisual {
                 name: taskName,
                 start: startDate,
                 end: endDate,
+                auctualStart: auctualStartDate,
+                auctualEnd: auctualEndDate,
+                createSplit: shouldCreateSplit,
                 progress: progress,
                 type: "task",
                 // dependencies: dependencies ? dependencies.split(',').map(dep => dep.trim()).filter(dep => dep) : undefined
