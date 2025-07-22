@@ -83,7 +83,7 @@ export class Visual implements IVisual {
             // Handle date parsing
             const startDate = startDateValue ? new Date(startDateValue as any) : new Date();
             const endDate = endDateValue ? new Date(endDateValue as any) : new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
-const ifMilestone = (): boolean => {
+            const ifMilestone = (): boolean => {
                 if (startDate && endDate) {
                     return startDate.getTime() === endDate.getTime();
                 }
