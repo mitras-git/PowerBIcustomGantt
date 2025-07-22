@@ -83,6 +83,12 @@ export class Visual implements IVisual {
             // Handle date parsing
             const startDate = startDateValue ? new Date(startDateValue as any) : new Date();
             const endDate = endDateValue ? new Date(endDateValue as any) : new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+const ifMilestone = (): boolean => {
+                if (startDate && endDate) {
+                    return startDate.getTime() === endDate.getTime();
+                }
+                return false;
+            };
             const auctualStartDate = auctualStartDateValue ? new Date(auctualStartDateValue as any) : null;
             const auctualEndDate = auctualEndDateValue ? new Date(auctualEndDateValue as any) : null;
 
@@ -102,7 +108,7 @@ export class Visual implements IVisual {
                 auctualEnd: auctualEndDate,
                 createSplit: shouldCreateSplit,
                 progress: progress,
-                type: "task",
+                type: ifMilestone() ? "milestone" : "task",
                 // dependencies: dependencies ? dependencies.split(',').map(dep => dep.trim()).filter(dep => dep) : undefined
                 heirarchyLevel: null, // Default hierarchy level
             };
