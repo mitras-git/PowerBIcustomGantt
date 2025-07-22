@@ -139,6 +139,7 @@ export class Visual implements IVisual {
             if (card.projectSelected.value?.value) colors.projectSelected = card.projectSelected.value.value;
             if (card.milestone.value?.value) colors.milestone = card.milestone.value.value;
             if (card.milestoneSelected.value?.value) colors.milestoneSelected = card.milestoneSelected.value.value;
+            if (card.actualColor.value?.value) colors.actualColor = card.actualColor.value.value;
         }
         return colors;
     }

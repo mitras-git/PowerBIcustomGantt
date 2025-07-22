@@ -12,4 +12,5 @@ export interface GanttColors {
     projectSelected?: string;
     milestone?: string;
     milestoneSelected?: string;
+    actualColor?: string;
 }

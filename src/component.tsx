@@ -110,6 +110,7 @@ export const CustomGanttChart: React.FC<CustomGanttChartProps> = ({ tasks: propT
                     projectProgressSelectedColor={colors?.projectSelected}
                     milestoneBackgroundColor={colors?.milestone}
                     milestoneBackgroundSelectedColor={colors?.milestoneSelected}
+                    actualColor={colors?.actualColor}
                 />
             </div>
         </div>

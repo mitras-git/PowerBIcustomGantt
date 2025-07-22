@@ -72,6 +72,12 @@ class GanttColorsCardSettings extends FormattingSettingsCard {
         value: { value: "#baba02" }
     });
 
+    actualColor = new formattingSettings.ColorPicker({
+        name: "actualColor",
+        displayName: "Actual Color",
+        value: { value: "#b8c2cc" }
+    });
+
     name: string = "ganttColors";
     displayName: string = "Gantt Colors";
     slices: Array<FormattingSettingsSlice> = [
@@ -80,7 +86,8 @@ class GanttColorsCardSettings extends FormattingSettingsCard {
         this.projectProgress, 
         this.projectSelected, 
         this.milestone, 
-        this.milestoneSelected
+        this.milestoneSelected,
+        this.actualColor
     ];
 }
 

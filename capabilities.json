@@ -97,6 +97,15 @@
                             }
                         }
                     }
+                },
+                "actualColor": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
                 }
             }
         }
